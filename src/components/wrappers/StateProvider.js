@@ -25,7 +25,7 @@ class StateProvider extends Component {
     }
 
     addNew(text) {
-        let updatedList = addToList(this.state.list, {text, completed: false});
+        let updatedList = addToList(this.state.list, {text, completed: false , priority });
 
         this.setState({list: updatedList});
     }
@@ -35,10 +35,23 @@ class StateProvider extends Component {
     }
 
     changeStatus(itemId, completed) {
-        const updatedList = updateStatus(this.state.list, itemId, completed);
 
-        this.setState({list: updatedList});
+        //! Feature 1: Confirm before changing the status of a task.
+        const confirmComplete = window.confirm(
+            completed
+                ? 'Are you sure you want to mark this task as completed?'
+                : 'Are you sure you want to mark this task as incomplete?'
+        );
+    
+        if (confirmComplete) {
+            const updatedList = updateStatus(this.state.list, itemId, completed);
+            this.setState({ list: updatedList });
+            return true; 
+        }
+    
+        return false;
     }
+    
 
     changeMode(mode = MODE_NONE) {
         this.setState({mode});
