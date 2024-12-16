@@ -16,7 +16,7 @@ export default function Footer(props) {
             </div>
 
             {/* Sorting Options */}
-            <div className="pull-right sorting-options">
+            <div className="sorting-options">
                 <ul className="filters list-unstyled clearfix">
                     <li>
                         <a
