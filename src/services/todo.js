@@ -56,7 +56,7 @@ function getNextId() {
     return getAll().length + todoCounter++;
 }
 
-/**
+/** //! Feature 3 & 4 : Add a  priority,  dueDate new task to the addNew list
  * Sorts the todo list based on the provided type (priority or due date).
  *
  * @param {Array} list

@@ -24,6 +24,7 @@ class StateProvider extends Component {
         return <div>{children}</div>;
     }
 
+    //! Feature 3 & 4 : Add a  priority,  dueDate new task to the addNew list
     addNew(text, priority = 'Medium', dueDate = null) {
         let updatedList = addToList(this.state.list, {
             text,
@@ -64,7 +65,8 @@ class StateProvider extends Component {
     setSearchQuery(text) {
         this.setState({query: text || ''});
     }
-
+    
+    //! Feature 4: Sort the list based on priority or due date.
     changeSort(type, order = 'asc') {
         const sortedList = sortList(this.state.list.slice(), type, order);
         this.setState({ list: sortedList });
