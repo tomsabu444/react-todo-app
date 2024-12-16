@@ -61,24 +61,30 @@ function getNextId() {
  *
  * @param {Array} list
  * @param {String} type - "priority" or "dueDate"
+ * @param {String} order - "asc" (default) or "desc"
  * @return {Array} - Sorted list
  */
-export function sortList(list, type) {
+export function sortList(list, type, order = 'asc') {
     if (type === 'priority') {
         const priorityOrder = { High: 1, Medium: 2, Low: 3 };
-        return list.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+        list.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
     }
 
     if (type === 'dueDate') {
-        return list.sort((a, b) => {
-            const dateA = new Date(a.dueDate || '9999-12-31'); // Default far-future date if dueDate is null
+        list.sort((a, b) => {
+            const dateA = new Date(a.dueDate || '9999-12-31'); // Treat null dates as far future
             const dateB = new Date(b.dueDate || '9999-12-31');
-            return dateA - dateB; // Ascending order
+            return dateA - dateB; // Ascending order by default
         });
     }
 
-    return list; // Default: no sorting
+    if (order === 'desc') {
+        list.reverse(); // Reverse the array for descending order
+    }
+
+    return list;
 }
+
 
 
 /**

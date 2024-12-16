@@ -65,8 +65,8 @@ class StateProvider extends Component {
         this.setState({query: text || ''});
     }
 
-    changeSort(type) {
-        let sortedList = sortList(this.state.list.slice(), type); // Use sortList from todo.js
+    changeSort(type, order = 'asc') {
+        const sortedList = sortList(this.state.list.slice(), type, order);
         this.setState({ list: sortedList });
     }
 }
