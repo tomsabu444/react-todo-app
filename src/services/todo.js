@@ -9,17 +9,23 @@ export function getAll() {
         {
             id: 1,
             text: 'Learn Javascript',
-            completed: false
+            completed: false,
+            priority: 'High',
+            dueDate: '2024-12-20',
         },
         {
             id: 2,
             text: 'Learn React',
-            completed: false
+            completed: false,
+            priority: 'Medium',
+            dueDate: '2024-12-25',
         },
         {
             id: 3,
             text: 'Build a React App',
-            completed: false
+            completed: false,
+            priority: 'Low',
+            dueDate: null,
         }
     ]
 }
@@ -51,6 +57,31 @@ function getNextId() {
 }
 
 /**
+ * Sorts the todo list based on the provided type (priority or due date).
+ *
+ * @param {Array} list
+ * @param {String} type - "priority" or "dueDate"
+ * @return {Array} - Sorted list
+ */
+export function sortList(list, type) {
+    if (type === 'priority') {
+        const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+        return list.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    }
+
+    if (type === 'dueDate') {
+        return list.sort((a, b) => {
+            const dateA = new Date(a.dueDate || '9999-12-31'); // Default far-future date if dueDate is null
+            const dateB = new Date(b.dueDate || '9999-12-31');
+            return dateA - dateB; // Ascending order
+        });
+    }
+
+    return list; // Default: no sorting
+}
+
+
+/**
  * Adds a new item on the list and returns the new updated list (immutable).
  *
  * @param {Array} list
@@ -59,7 +90,9 @@ function getNextId() {
  */
 export function addToList(list, data) {
     let item = Object.assign({
-        id: getNextId()
+        id: getNextId(),
+        priority: data.priority || 'Medium',
+        dueDate: data.dueDate || null
     }, data);
 
     return list.concat([item]);

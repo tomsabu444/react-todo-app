@@ -124,3 +124,29 @@ footer .buttons {
     border: 1px solid rgba(229, 229, 229, 0.5);
     color: #888;
 }
+
+.additional-inputs {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px; /* Space between inputs */
+}
+
+.priority-dropdown,
+.due-date-input {
+    flex: 1;
+}
+
+.submit-task {
+    flex: none;
+    padding: 5px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submit-task:hover {
+    background-color: #0056b3;
+}

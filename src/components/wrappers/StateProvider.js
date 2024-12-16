@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {FILTER_ALL} from '../../services/filter';
 import {MODE_CREATE, MODE_NONE} from '../../services/mode';
 import {objectWithOnly, wrapChildrenWith} from '../../util/common';
-import {getAll, addToList, updateStatus} from '../../services/todo';
+import {getAll, addToList, updateStatus ,sortList} from '../../services/todo';
 
 class StateProvider extends Component {
     constructor() {
@@ -18,16 +18,20 @@ class StateProvider extends Component {
     render() {
         let children = wrapChildrenWith(this.props.children, {
             data: this.state,
-            actions: objectWithOnly(this, ['addNew', 'changeFilter', 'changeStatus', 'changeMode', 'setSearchQuery'])
+            actions: objectWithOnly(this, ['addNew', 'changeFilter', 'changeStatus', 'changeMode', 'setSearchQuery','changeSort'])
         });
 
         return <div>{children}</div>;
     }
 
-    addNew(text) {
-        let updatedList = addToList(this.state.list, {text, completed: false});
-
-        this.setState({list: updatedList});
+    addNew(text, priority = 'Medium', dueDate = null) {
+        let updatedList = addToList(this.state.list, {
+            text,
+            completed: false,
+            priority,
+            dueDate,
+        });
+        this.setState({ list: updatedList });
     }
 
     changeFilter(filter) {
@@ -59,6 +63,11 @@ class StateProvider extends Component {
 
     setSearchQuery(text) {
         this.setState({query: text || ''});
+    }
+
+    changeSort(type) {
+        let sortedList = sortList(this.state.list.slice(), type); // Use sortList from todo.js
+        this.setState({ list: sortedList });
     }
 }
 

@@ -11,6 +11,10 @@ export default function TodoItem(props) {
             <div className="checkbox">
                 <label>
                     <CheckBox checked={data.completed} onChange={handleChange}/> {data.text}
+                    <div>
+                    <span className="badge badge-primary">({data.priority})</span>
+                    {data.dueDate && <span className="due-date"> Due: {data.dueDate}</span>}
+                    </div>
                 </label>
             </div>
         </li>
